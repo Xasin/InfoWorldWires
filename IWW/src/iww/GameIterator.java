@@ -1,9 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package iww;
+
+import java.awt.*;
 
 /**
  *
@@ -30,6 +27,10 @@ public class GameIterator {
         return cellStates[x][y];
     }
     
+    public Color getCellColor(int x, int y) {
+        return this.cellHandle.getCellColor(this.getCellType(x, y));
+    }
+    
     public int[] getSurroundingCellTypes(int x, int y) {
         int[] cellTypes = new int[cellHandle.getCellTypes()];
         for(int i=0; i<cellTypes.length; i++) 
@@ -39,10 +40,9 @@ public class GameIterator {
         if(x > (this.fieldX-1) || x < 0 || y > (this.fieldY-1) || y < 0)
             return cellTypes;
         
-        for(int i=0; i<9; i++) {
+        for(int i=0; i<9; i++)
             if(i != 4)
-                cellTypes[getCellType(i%3, i/3)]++;
-        }
+                cellTypes[getCellType(x + i%3 -1, y + i/3 -1)]++;
     
         return cellTypes;
     }
@@ -58,7 +58,7 @@ public class GameIterator {
         
         for(int x=0; x<fieldX; x++)
             for(int y=0; y<fieldY; y++) {
-                cellStatesNext[x][y] = cellHandle.computeNextState(getSurroundingCellTypes(x, y));
+                cellStatesNext[x][y] = cellHandle.computeNextState(cellStates[x][y], getSurroundingCellTypes(x, y));
             }
         
         this.cellStates = cellStatesNext;
