@@ -11,13 +11,15 @@ public class Button extends JButton{
   private final int size    = 10;
   private final int margin  = 10;
   private final int posX, posY;
-  private GameIterator gameLogic;  
+  private GameIterator gameLogic;
+  private ButtonFunction onButtonPress;
   
-  public Button(int x, int y, GameIterator game, Container cp) {
+  public Button(int x, int y, GameIterator game, ButtonFunction btnPressAction) {
     this.posX = x;
     this.posY = y;
     
     this.gameLogic = game;
+    this.onButtonPress = btnPressAction;
     
     setBounds(size*x +margin, size*y +margin, size, size);
     //setMargin(new Insets(2, 2, 2, 2));
@@ -29,10 +31,7 @@ public class Button extends JButton{
       public void actionPerformed(ActionEvent evt) { 
         oneButton_ActionPerformed(evt);
       }
-    });
-    
-    cp.add(this);
-    
+    });    
   }
   
   public void redoColor() {
@@ -40,6 +39,6 @@ public class Button extends JButton{
   }
   
   public void oneButton_ActionPerformed(ActionEvent evt) {
-    gameLogic.incrementCellType(this.posX, this.posY);
+      this.onButtonPress.run(this.posX, this.posY);
   } 
 } 

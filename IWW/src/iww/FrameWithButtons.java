@@ -47,10 +47,17 @@ public class FrameWithButtons extends JFrame {
     
     gameField = new Button[sizeX][sizeY];
     
+    ButtonFunction bFunc = new ButtonFunction() {
+        public void run(int posX, int posY) {
+            gameLogic.incrementCellType(posX, posY);
+        }
+    };
+    
     // Anfang Komponenten
     for (x=0;x<sizeX;x++) {
       for (y=0;y<sizeY;y++) {
-        gameField[x][y] = new Button(x, y, gameLogic, cp);
+        gameField[x][y] = new Button(x, y, gameLogic, bFunc);
+        cp.add(gameField[x][y]);
       }
     } 
     
