@@ -9,13 +9,14 @@ package iww;
  *
  * @author xasin
  */
-public class IWW {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+public class CellHandler {
+    
+    
+    public int getCellTypes() {
+        return 3;
     }
     
+    public int computeNextState(int[] surroundingStates) {
+        return 0;
+    }
 }

@@ -23,6 +23,7 @@ public class Button extends JButton{
         oneButton_ActionPerformed(evt);
       }
     });
+    
     cp.add(this);
     
   }
