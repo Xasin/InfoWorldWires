@@ -2,6 +2,8 @@ package iww;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.*;
 import javax.swing.event.*;
 
@@ -9,13 +11,18 @@ import javax.swing.event.*;
   */
 
 public class FrameWithButtons extends JFrame {
-  private final int sizeX = 10, sizeY = 10;
+  private final int sizeX = 20, sizeY = 20;
     
     
   private Button[][] gameField;
   private GameIterator gameLogic;
   
-  private JButton tick;
+  private JButton tick, run;
+  private JSlider tickrateSelector;
+  
+  private Timer timer;
+  private float cTicks = 0;
+  private boolean doTicks = false;
   
   
   public FrameWithButtons(String title) { 
@@ -47,22 +54,64 @@ public class FrameWithButtons extends JFrame {
     } 
     
     tick = new JButton();
-    tick.setBounds(220, 10, 50, 30);
-    tick.setText("Tick Once");
+    tick.setBounds(220, 10, 100, 30);
+    tick.setText("Tick");
     tick.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent something) {
             gameLogic.tick();
-            
-            for (int x=0;x<sizeX;x++)
-                for (int y=0;y<sizeY;y++)
-                    gameField[x][y].redoColor();
+        }
+    });
+    run = new JButton();
+    run.setBounds(220, 40, 100, 30);
+    run.setText("Run");
+    run.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent something) {
+            doTicks ^= true;
+            if(doTicks)
+                run.setText("Stop");
+            else
+                run.setText("Run");
         }
     });
     
     cp.add(tick);
+    cp.add(run);
+    
+    tickrateSelector = new JSlider(0, 100);
+    tickrateSelector.setBounds(330, 40, 100, 30);
+    tickrateSelector.setMajorTickSpacing(10);
+    tickrateSelector.setPaintTicks(true);
+    
+    cp.add(tickrateSelector);
+    
+    int FPS = 60;
+    timer = new Timer(true);
+    timer.scheduleAtFixedRate(new TimerTask() {
+        public void run() {
+            if(doTicks)
+                cTicks += (float)tickrateSelector.getValue()/FPS;
+            
+            int ticksToDo = (int)Math.floor(cTicks);
+            cTicks -= ticksToDo;
+            
+            gameLogic.tick(ticksToDo);
+                
+            refreshButtons();
+            
+            cp.repaint();
+        }
+    }, 1000, 1000/FPS);
+    
+    
     
     // Ende Komponenten
     setVisible(true);
+  }
+  
+  public void refreshButtons() {   
+    for (int x=0;x<sizeX;x++)
+        for (int y=0;y<sizeY;y++)
+            gameField[x][y].redoColor();  
   }
   
   public static void main(String[] args) {

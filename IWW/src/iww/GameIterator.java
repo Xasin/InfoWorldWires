@@ -20,6 +20,10 @@ public class GameIterator {
         this.cellHandle = cellHandle;
     }
     
+    public int getCellTypes() {
+        return this.cellHandle.getCellTypes();
+    }
+    
     public int getCellType(int x, int y) {
         if(x > (this.fieldX-1) || x < 0 || y > (this.fieldY-1) || y < 0)
             return 0;
@@ -27,8 +31,11 @@ public class GameIterator {
         return cellStates[x][y];
     }
     
+    public Color getCellColor(int t) {
+        return this.cellHandle.getCellColor(t);
+    }
     public Color getCellColor(int x, int y) {
-        return this.cellHandle.getCellColor(this.getCellType(x, y));
+        return this.getCellColor(this.getCellType(x, y));
     }
     
     public int[] getSurroundingCellTypes(int x, int y) {
@@ -53,6 +60,13 @@ public class GameIterator {
         this.cellStates[x][y] = (this.cellStates[x][y] + 1) % cellHandle.getCellTypes();
     }
     
+    public void setCellType(int x, int y, int t) {
+        if(x >= this.fieldX || x < 0 || y >= this.fieldY || y < 0 || t >= cellHandle.getCellTypes())
+            return;
+        
+        this.cellStates[x][y] = t;
+    }
+    
     public void tick() {
         int[][] cellStatesNext = new int[fieldX][fieldY];
         
@@ -64,11 +78,13 @@ public class GameIterator {
         this.cellStates = cellStatesNext;
     }
     
-    public void tick(int num) {
-        if(num < 0 || num > 1000000)
+    public void tick(int num) {        
+        if(num < 1)
             return;
         
-        for(int i=0; i<num; i++)
+        for(int i=0; i<num; i++) {
             this.tick();
+        }
+
     }
 }

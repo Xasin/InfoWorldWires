@@ -8,7 +8,7 @@ import javax.swing.event.*;
 
 public class Button extends JButton{
   
-  private final int size    = 20;
+  private final int size    = 10;
   private final int margin  = 10;
   private final int posX, posY;
   private GameIterator gameLogic;  
@@ -41,6 +41,5 @@ public class Button extends JButton{
   
   public void oneButton_ActionPerformed(ActionEvent evt) {
     gameLogic.incrementCellType(this.posX, this.posY);
-    redoColor();
   } 
 } 
