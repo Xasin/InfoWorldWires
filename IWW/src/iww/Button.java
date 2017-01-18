@@ -23,7 +23,7 @@ public class Button extends JButton{
     //setMargin(new Insets(2, 2, 2, 2));
     //setBorder(BorderFactory.createBevelBorder(0, new Color(0xC0C0C0), Color.DARK_GRAY));
     
-    setBackground(gameLogic.getCellColor(posX, posY));
+    setBackground(gameLogic.getCellColorAt(posX, posY));
 
     addActionListener(new ActionListener() { 
       public void actionPerformed(ActionEvent evt) { 
@@ -36,7 +36,7 @@ public class Button extends JButton{
   }
   
   public void redoColor() {
-    setBackground(gameLogic.getCellColor(posX, posY));
+    setBackground(gameLogic.getCellColorAt(posX, posY));
   }
   
   public void oneButton_ActionPerformed(ActionEvent evt) {

@@ -43,6 +43,7 @@ public class FrameWithButtons extends JFrame {
     cp.setLayout(null);
     
     gameLogic = new GameIterator(sizeX, sizeY, new CellHandler());
+    gameLogic.setTickrate(50);
     
     gameField = new Button[sizeX][sizeY];
     
@@ -71,6 +72,8 @@ public class FrameWithButtons extends JFrame {
                 run.setText("Stop");
             else
                 run.setText("Run");
+            
+            gameLogic.doNTicks((doTicks) ? -1 : 0);
         }
     });
     
@@ -81,21 +84,18 @@ public class FrameWithButtons extends JFrame {
     tickrateSelector.setBounds(330, 40, 100, 30);
     tickrateSelector.setMajorTickSpacing(10);
     tickrateSelector.setPaintTicks(true);
+    tickrateSelector.addChangeListener(new ChangeListener() {
+        public void stateChanged(ChangeEvent evt) {
+            gameLogic.setTickrate(tickrateSelector.getValue());
+        }
+    });
     
     cp.add(tickrateSelector);
     
-    int FPS = 60;
+    int FPS = 30;
     timer = new Timer(true);
     timer.scheduleAtFixedRate(new TimerTask() {
         public void run() {
-            if(doTicks)
-                cTicks += (float)tickrateSelector.getValue()/FPS;
-            
-            int ticksToDo = (int)Math.floor(cTicks);
-            cTicks -= ticksToDo;
-            
-            gameLogic.tick(ticksToDo);
-                
             refreshButtons();
             
             cp.repaint();
