@@ -48,6 +48,8 @@ public class GameIterator {
     }
     
     public void incrementCellType(int x, int y) {
+        if(x > (this.fieldX-1) || x < 0 || y > (this.fieldY-1) || y < 0)
+            return;
         this.cellStates[x][y] = (this.cellStates[x][y] + 1) % cellHandle.getCellTypes();
     }
     
