@@ -2,9 +2,8 @@ package iww;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Timer;
-import java.util.TimerTask;
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.*;
 
 /**    Test für das Schaffen vieler angeordneter Buttons
@@ -12,16 +11,13 @@ import javax.swing.event.*;
 
 public class FrameWithButtons extends JFrame {
   private final int sizeX = 20, sizeY = 20;
-    
-    
-  private Button[][] gameField;
+  
   private GameIterator gameLogic;
+  private GameWindow gameWindow;
   
   private JButton tick, run;
   private JSlider tickrateSelector;
   
-  private Timer timer;
-  private float cTicks = 0;
   private boolean doTicks = false;
   
   
@@ -44,22 +40,14 @@ public class FrameWithButtons extends JFrame {
     
     gameLogic = new GameIterator(sizeX, sizeY, new CellHandler());
     gameLogic.setTickrate(50);
+ 
+    gameWindow = new GameWindow(gameLogic);
+    gameWindow.setBounds(10, 10, 200, 200);
     
-    gameField = new Button[sizeX][sizeY];
+    TitledBorder gameBorder = new TitledBorder("Simulation:");
+    gameWindow.setBorder(gameBorder);
     
-    ButtonFunction bFunc = new ButtonFunction() {
-        public void run(int posX, int posY) {
-            gameLogic.incrementCellType(posX, posY);
-        }
-    };
-    
-    // Anfang Komponenten
-    for (x=0;x<sizeX;x++) {
-      for (y=0;y<sizeY;y++) {
-        gameField[x][y] = new Button(x, y, gameLogic, bFunc);
-        cp.add(gameField[x][y]);
-      }
-    } 
+    cp.add(gameWindow);
     
     tick = new JButton();
     tick.setBounds(220, 10, 100, 30);
@@ -99,26 +87,10 @@ public class FrameWithButtons extends JFrame {
     
     cp.add(tickrateSelector);
     
-    int FPS = 30;
-    timer = new Timer(true);
-    timer.scheduleAtFixedRate(new TimerTask() {
-        public void run() {
-            refreshButtons();
-            
-            cp.repaint();
-        }
-    }, 1000, 1000/FPS);
-    
     
     
     // Ende Komponenten
     setVisible(true);
-  }
-  
-  public void refreshButtons() {   
-    for (int x=0;x<sizeX;x++)
-        for (int y=0;y<sizeY;y++)
-            gameField[x][y].redoColor();  
   }
   
   public static void main(String[] args) {
