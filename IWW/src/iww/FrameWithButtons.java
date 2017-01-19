@@ -10,16 +10,12 @@ import javax.swing.event.*;
   */
 
 public class FrameWithButtons extends JFrame {
-  private final int sizeX = 20, sizeY = 20;
+  private final int sizeX = 49, sizeY = 15;
   
   private GameIterator gameLogic;
   private GameWindow gameWindow;
-  
-  private JButton tick, run;
-  private JSlider tickrateSelector;
-  
-  private boolean doTicks = false;
-  
+ 
+  private ControlPanel controlPanel;
   
   public FrameWithButtons(String title) { 
     // Frame-Initialisierung
@@ -42,52 +38,14 @@ public class FrameWithButtons extends JFrame {
     gameLogic.setTickrate(50);
  
     gameWindow = new GameWindow(gameLogic);
-    gameWindow.setBounds(10, 10, 200, 200);
-    
-    TitledBorder gameBorder = new TitledBorder("Simulation:");
-    gameWindow.setBorder(gameBorder);
+    gameWindow.setBounds(5, 5, 490, 150);
     
     cp.add(gameWindow);
     
-    tick = new JButton();
-    tick.setBounds(220, 10, 100, 30);
-    tick.setText("Tick");
-    tick.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent something) {
-            gameLogic.tick();
-        }
-    });
-    run = new JButton();
-    run.setBounds(220, 40, 100, 30);
-    run.setText("Run");
-    run.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent something) {
-            doTicks ^= true;
-            if(doTicks)
-                run.setText("Stop");
-            else
-                run.setText("Run");
-            
-            gameLogic.doNTicks((doTicks) ? -1 : 0);
-        }
-    });
+    controlPanel = new ControlPanel(gameLogic);
+    controlPanel.setBounds(5, 160, 490, 100);
     
-    cp.add(tick);
-    cp.add(run);
-    
-    tickrateSelector = new JSlider(0, 100);
-    tickrateSelector.setBounds(330, 40, 100, 30);
-    tickrateSelector.setMajorTickSpacing(10);
-    tickrateSelector.setPaintTicks(true);
-    tickrateSelector.addChangeListener(new ChangeListener() {
-        public void stateChanged(ChangeEvent evt) {
-            gameLogic.setTickrate(tickrateSelector.getValue());
-        }
-    });
-    
-    cp.add(tickrateSelector);
-    
-    
+    cp.add(controlPanel);
     
     // Ende Komponenten
     setVisible(true);
