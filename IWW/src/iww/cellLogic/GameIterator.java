@@ -77,8 +77,8 @@ public class GameIterator {
         return d;
     }
     
-    public byte getCellTypes() {
-        return this.cellHandle.getCellTypes();
+    public CellHandler getCellHandler() {
+        return this.cellHandle;
     }
     
     public byte getCellTypeAt(int x, int y) {
@@ -135,6 +135,7 @@ public class GameIterator {
             return;
         
         this.cellStates[x][y].setType(t);
+        this.cellStates[x][y].setMetavalues(new byte[4]);
     }
     
     public void tick() {

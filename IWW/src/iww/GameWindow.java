@@ -30,7 +30,6 @@ public class GameWindow extends JPanel {
         
         ButtonFunction bFunc = new ButtonFunction() {
             public void run(int posX, int posY) {
-                System.out.println("Test:" + posX + " " + posY);
                 gameLogic.applyCellType(posX, posY);
             }
         };
@@ -52,12 +51,15 @@ public class GameWindow extends JPanel {
         }, 0, 1000/30);
     }
     
-      
     private void refreshButtons() {   
       for (int x=0; x<gameSize.width; x++)
           for (int y=0; y<gameSize.height; y++)
               gamePixels[x][y].redoColor();
       
       this.repaint();
+    }
+    
+    public GameIterator getGameIterator() {
+        return gameLogic;
     }
 }

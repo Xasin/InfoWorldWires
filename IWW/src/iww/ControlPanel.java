@@ -22,6 +22,8 @@ public class ControlPanel extends javax.swing.JPanel {
         initComponents();
         
         this.gameLogic = logic;
+        
+        typeSelector.setModel(new javax.swing.DefaultComboBoxModel<>(gameLogic.getCellHandler().getTypeNames()));
     }
 
     /**
@@ -34,7 +36,7 @@ public class ControlPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         tickButton = new javax.swing.JButton();
-        typeSelector = new javax.swing.JSpinner();
+        typeSelector = new javax.swing.JComboBox<>();
         runButton = new javax.swing.JToggleButton();
         tpsSlider = new javax.swing.JSlider();
 
@@ -50,10 +52,10 @@ public class ControlPanel extends javax.swing.JPanel {
         });
         add(tickButton);
 
-        typeSelector.setToolTipText("Cell Type");
-        typeSelector.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                typeSelectorStateChanged(evt);
+        typeSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        typeSelector.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                typeSelectorActionPerformed(evt);
             }
         });
         add(typeSelector);
@@ -91,15 +93,15 @@ public class ControlPanel extends javax.swing.JPanel {
         gameLogic.setTickrate(tpsSlider.getValue());
     }//GEN-LAST:event_tpsSliderStateChanged
 
-    private void typeSelectorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_typeSelectorStateChanged
-        gameLogic.setPenType((byte)(int)typeSelector.getValue());
-    }//GEN-LAST:event_typeSelectorStateChanged
+    private void typeSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeSelectorActionPerformed
+        gameLogic.setPenType((byte)typeSelector.getSelectedIndex());
+    }//GEN-LAST:event_typeSelectorActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton runButton;
     private javax.swing.JButton tickButton;
     private javax.swing.JSlider tpsSlider;
-    private javax.swing.JSpinner typeSelector;
+    private javax.swing.JComboBox<String> typeSelector;
     // End of variables declaration//GEN-END:variables
 }

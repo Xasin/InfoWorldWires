@@ -8,11 +8,8 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.*;
 
-/**    Test für das Schaffen vieler angeordneter Buttons
-  */
-
 public class InfoWorldWires extends JFrame {
-  private final int sizeX = 49, sizeY = 15;
+  private final int sizeX = 69, sizeY = 35;
   
   private GameIterator gameLogic;
   private GameWindow gameWindow;
@@ -23,8 +20,8 @@ public class InfoWorldWires extends JFrame {
     // Frame-Initialisierung
     super(title);
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-    int frameWidth = 500; 
-    int frameHeight = 300;
+    int frameWidth = 700; 
+    int frameHeight = 500;
     setSize(frameWidth, frameHeight);
     
     Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
@@ -40,12 +37,12 @@ public class InfoWorldWires extends JFrame {
     gameLogic.setTickrate(50);
  
     gameWindow = new GameWindow(gameLogic);
-    gameWindow.setBounds(5, 5, 490, 150);
+    gameWindow.setBounds(5, 5, 690, 350);
     
     cp.add(gameWindow);
     
     controlPanel = new ControlPanel(gameLogic);
-    controlPanel.setBounds(5, 160, 490, 100);
+    controlPanel.setBounds(5, 360, 690, 100);
     
     cp.add(controlPanel);
     
