@@ -34,7 +34,7 @@ public class ControlPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         tickButton = new javax.swing.JButton();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        typeSelector = new javax.swing.JSpinner();
         runButton = new javax.swing.JToggleButton();
         tpsSlider = new javax.swing.JSlider();
 
@@ -49,7 +49,14 @@ public class ControlPanel extends javax.swing.JPanel {
             }
         });
         add(tickButton);
-        add(filler1);
+
+        typeSelector.setToolTipText("Cell Type");
+        typeSelector.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                typeSelectorStateChanged(evt);
+            }
+        });
+        add(typeSelector);
 
         runButton.setText("Run Simulation");
         runButton.setToolTipText("Start/Stop running the simulation");
@@ -84,11 +91,15 @@ public class ControlPanel extends javax.swing.JPanel {
         gameLogic.setTickrate(tpsSlider.getValue());
     }//GEN-LAST:event_tpsSliderStateChanged
 
+    private void typeSelectorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_typeSelectorStateChanged
+        gameLogic.setPenType((byte)(int)typeSelector.getValue());
+    }//GEN-LAST:event_typeSelectorStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.Box.Filler filler1;
     private javax.swing.JToggleButton runButton;
     private javax.swing.JButton tickButton;
     private javax.swing.JSlider tpsSlider;
+    private javax.swing.JSpinner typeSelector;
     // End of variables declaration//GEN-END:variables
 }

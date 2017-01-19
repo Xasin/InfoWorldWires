@@ -19,6 +19,8 @@ public class GameIterator {
     private float cTicks, tickrate;
     private int leftTicks;
     
+    private byte penType;
+    
     public GameIterator(int x, int y, CellHandler cellHandle) {
         this.cellStates = new CellField[x][y];
         for(int i=0; i<x; i++)
@@ -111,11 +113,21 @@ public class GameIterator {
         return cellArray;
     }
     
+    public void setPenType(byte t) {
+        if(t > cellHandle.getCellTypes())
+            return;
+        
+        this.penType = t;
+    }
+    
     public void incrementCellType(int x, int y) {
         if(x > (this.fieldX-1) || x < 0 || y > (this.fieldY-1) || y < 0)
             return;
         
         this.cellStates[x][y].setType((byte) ((this.getCellTypeAt(x, y) + 1) % cellHandle.getCellTypes()));
+    }
+    public void applyCellType(int x, int y) {
+       this.setCellType(x, y, penType);
     }
     
     public void setCellType(int x, int y, byte t) {

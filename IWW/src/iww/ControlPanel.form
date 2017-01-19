@@ -37,15 +37,13 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tickButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.Box$Filler" name="filler1">
+    <Component class="javax.swing.JSpinner" name="typeSelector">
       <Properties>
-        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[32767, 32767]"/>
-        </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Cell Type"/>
       </Properties>
-      <AuxValues>
-        <AuxValue name="classDetails" type="java.lang.String" value="Box.Filler.Glue"/>
-      </AuxValues>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="typeSelectorStateChanged"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="runButton">
       <Properties>

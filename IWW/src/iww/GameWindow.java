@@ -31,7 +31,7 @@ public class GameWindow extends JPanel {
         ButtonFunction bFunc = new ButtonFunction() {
             public void run(int posX, int posY) {
                 System.out.println("Test:" + posX + " " + posY);
-                gameLogic.incrementCellType(posX, posY);
+                gameLogic.applyCellType(posX, posY);
             }
         };
         
