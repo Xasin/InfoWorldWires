@@ -60,6 +60,14 @@ public class GameIterator {
         this.leftTicks = (n < 0) ? -1 : n;
     }
     
+    public Dimension getSize() {
+        Dimension d = new Dimension();
+        d.height = this.fieldY;
+        d.width = this.fieldX;
+        
+        return d;
+    }
+    
     public int getCellTypes() {
         return this.cellHandle.getCellTypes();
     }
