@@ -1,5 +1,7 @@
 package iww;
 
+import iww.cellLogic.GameIterator;
+import iww.cellLogic.CellHandler;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -9,7 +11,7 @@ import javax.swing.event.*;
 /**    Test für das Schaffen vieler angeordneter Buttons
   */
 
-public class FrameWithButtons extends JFrame {
+public class InfoWorldWires extends JFrame {
   private final int sizeX = 49, sizeY = 15;
   
   private GameIterator gameLogic;
@@ -17,7 +19,7 @@ public class FrameWithButtons extends JFrame {
  
   private ControlPanel controlPanel;
   
-  public FrameWithButtons(String title) { 
+  public InfoWorldWires(String title) { 
     // Frame-Initialisierung
     super(title);
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -52,6 +54,6 @@ public class FrameWithButtons extends JFrame {
   }
   
   public static void main(String[] args) {
-    new FrameWithButtons("Test Buttons");
+    new InfoWorldWires("InfoWorldWires Simulator");
   }
 }

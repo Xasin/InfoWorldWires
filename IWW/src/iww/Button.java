@@ -1,5 +1,6 @@
 package iww;
 
+import iww.cellLogic.GameIterator;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;

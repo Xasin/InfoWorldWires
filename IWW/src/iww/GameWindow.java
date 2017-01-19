@@ -1,5 +1,6 @@
 package iww;
 
+import iww.cellLogic.GameIterator;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.Timer;

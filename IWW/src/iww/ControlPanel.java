@@ -5,6 +5,8 @@
  */
 package iww;
 
+import iww.cellLogic.GameIterator;
+
 /**
  *
  * @author xasin
