@@ -7,8 +7,8 @@ import java.awt.Color;
  *
  * @author xasin
  */
-public class ClockControl extends CellType {
-    public ClockControl(CellHandler handler) {
+public class ActivatorCell extends CellType {
+    public ActivatorCell(CellHandler handler) {
         super(handler, "Activator");
     }
     

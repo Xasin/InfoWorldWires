@@ -21,7 +21,7 @@ public class CellHandler {
         cellTypes[1] = new WireCell(this);
         cellTypes[2] = new SignalCell(this);
         cellTypes[3] = new ClockCell(this);
-        cellTypes[4] = new ClockControl(this);
+        cellTypes[4] = new ActivatorCell(this);
         cellTypes[5] = new RandomCell(this);
         cellTypes[6] = new BridgeCell(this);
     }
