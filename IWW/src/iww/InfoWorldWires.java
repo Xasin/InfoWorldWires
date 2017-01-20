@@ -33,7 +33,7 @@ public class InfoWorldWires extends JFrame {
     Container cp = getContentPane();
     cp.setLayout(null);
     
-    gameLogic = new GameIterator(sizeX, sizeY, new CellHandler());
+    gameLogic = new GameIterator(sizeX, sizeY, new CellHandler(gameLogic));
     gameLogic.setTickrate(50);
  
     gameWindow = new GameWindow(gameLogic);

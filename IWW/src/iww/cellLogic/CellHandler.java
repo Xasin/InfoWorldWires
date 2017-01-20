@@ -11,6 +11,12 @@ public class CellHandler {
     
     private final int clockLength = 4;
     
+    public final GameIterator gameLogic;
+    
+    public CellHandler(GameIterator logic) {
+        this.gameLogic = logic;
+    }
+    
     public byte getCellTypes() {
         return 7;
     }
