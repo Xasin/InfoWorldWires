@@ -20,7 +20,7 @@ public class CellType {
         return Color.darkGray;
     }
     
-    public boolean isActiveFor(CellField c) {
+    public boolean isActiveFor(CellField c, CellField source) {
         return false;
     }
     
