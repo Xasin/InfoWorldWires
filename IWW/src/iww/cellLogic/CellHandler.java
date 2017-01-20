@@ -16,13 +16,14 @@ public class CellHandler {
     private GameIterator gameLogic;
     
     public CellHandler() {
-        cellTypes = new CellType[6];
+        cellTypes = new CellType[7];
         cellTypes[0] = new CellType(this, "Empty Cell");
         cellTypes[1] = new WireCell(this);
         cellTypes[2] = new SignalCell(this);
         cellTypes[3] = new ClockCell(this);
         cellTypes[4] = new ClockControl(this);
         cellTypes[5] = new RandomCell(this);
+        cellTypes[6] = new BridgeCell(this);
     }
     public void setGameLogic(GameIterator logic) {
         this.gameLogic = logic;

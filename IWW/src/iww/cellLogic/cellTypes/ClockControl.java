@@ -9,7 +9,7 @@ import java.awt.Color;
  */
 public class ClockControl extends CellType {
     public ClockControl(CellHandler handler) {
-        super(handler, "Clock Control");
+        super(handler, "Activator");
     }
     
     public Color getColor(CellField c) {
