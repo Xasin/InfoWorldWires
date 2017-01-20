@@ -2,6 +2,7 @@ package iww.cellLogic;
 
 
 import java.awt.*;
+import iww.cellLogic.cellTypes.*;
 
 /**
  *

@@ -8,11 +8,11 @@ import iww.cellLogic.*;
  * @author xasin
  */
 public class CellType {
-    protected final GameIterator gameLogic;
+    protected final CellHandler cellHandler;
     public final String name;
     
-    public CellType(GameIterator logic, String name) {
-        this.gameLogic = logic;
+    public CellType(CellHandler handler, String name) {
+        this.cellHandler = handler;
         this.name = name;
     }
     
