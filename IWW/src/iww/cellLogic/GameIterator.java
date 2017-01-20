@@ -31,6 +31,7 @@ public class GameIterator {
         this.fieldY = y;
         
         this.cellHandle = cellHandle;
+        this.cellHandle.setGameLogic(this);
         
         gameTick = new Timer(true);
         gameTick.schedule(new TimerTask() {
@@ -141,7 +142,7 @@ public class GameIterator {
     public void tick() {
         for(int x=0; x<fieldX; x++)
             for(int y=0; y<fieldY; y++) {
-                cellHandle.computeNextState(this, x, y);
+                cellHandle.computeNextState(x, y);
             }
         
         for(CellField cr[] : cellStates)
