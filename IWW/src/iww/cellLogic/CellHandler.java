@@ -11,30 +11,29 @@ import iww.cellLogic.cellTypes.*;
 public class CellHandler {
     
     private final int clockLength = 4;
+    private final CellType[] cellTypes;
     
     public final GameIterator gameLogic;
     
     public CellHandler(GameIterator logic) {
         this.gameLogic = logic;
+        
+        cellTypes = new CellType[2];
+        cellTypes[0] = new CellType(this, "Empty Cell");
+        cellTypes[1] = new WireCell(this);
     }
     
     public byte getCellTypes() {
         return 7;
     }
     
-    private int countActiveWires(CellField[] cells, boolean specials) {
+    private int countActiveCellsFor(int x, int y) {
+        CellField centerCell = gameLogic.getCellAt(x, y);
         int n = 0;
         
-        for(CellField c : cells) {
-            if(c.getType() == 2 && (c.getMetavalues()[3] <= 1))
+        for(CellField c : gameLogic.getSurroundingCells(x, y))
+            if(cellTypes[c.getType()].isActiveFor(centerCell))
                 n++;
-            if(specials) {
-                if(c.getType() == 4 && c.getMetavalues()[0] == 0)
-                    n++;
-                if(c.getType() == 2 && c.getMetavalues()[3] == 6)
-                    n++;
-            }
-        }
         
         return n;
     }
