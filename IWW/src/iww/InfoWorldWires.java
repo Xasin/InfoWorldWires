@@ -9,7 +9,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.*;
 
 public class InfoWorldWires extends JFrame {
-  private final int sizeX = 69, sizeY = 35;
+  private final int sizeX = (int)(69), sizeY = (int)(35);
   
   private GameIterator gameLogic;
   private GameWindow gameWindow;
@@ -21,7 +21,7 @@ public class InfoWorldWires extends JFrame {
     super(title);
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     int frameWidth = 700; 
-    int frameHeight = 500;
+    int frameHeight = 520;
     setSize(frameWidth, frameHeight);
     
     Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
@@ -42,7 +42,7 @@ public class InfoWorldWires extends JFrame {
     cp.add(gameWindow);
     
     controlPanel = new ControlPanel(gameLogic);
-    controlPanel.setBounds(5, 360, 690, 100);
+    controlPanel.setBounds(5, 360, 690, 120);
     
     cp.add(controlPanel);
     

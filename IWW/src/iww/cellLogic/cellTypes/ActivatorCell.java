@@ -13,7 +13,7 @@ public class ActivatorCell extends CellType {
     }
     
     public Color getColor(CellField c) {
-        if(c.getMetavalues()[0] == 0)
+        if(c.getMetavalues()[0] == c.getMetavalues()[1])
             return new Color(0, 127, 0);
         else 
             return new Color(100, 255, 100);
@@ -23,7 +23,7 @@ public class ActivatorCell extends CellType {
         int n = 0;
         for(CellField c : cellHandler.getGameLogic().getSurroundingCells(x, y))
             if(c.getType() == 4
-                    && c.getMetavalues()[0] != 0)
+                    && c.getMetavalues()[0] != c.getMetavalues()[1])
                 n++;
         
         return n;

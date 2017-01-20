@@ -8,15 +8,12 @@ import java.awt.Color;
  * @author xasin
  */
 public class ClockCell extends CellType {
-    private final byte cycleLength = 2;
-    
     public ClockCell(CellHandler handler) {
         super(handler, "Clock");
     }
     
     public Color getColor(CellField c) {
-        float clockPhase = (float)(c.getMetavalues()[0])/cycleLength;
-        
+        float clockPhase = ((float)c.getMetavalues()[0])/c.getMetavalues()[2];
         if(c.getMetavalues()[1] == 0)
             return new Color(   (float)(0.2*clockPhase + 0.8), 
                                 (float)(0.5*clockPhase + 0.1),
@@ -29,7 +26,7 @@ public class ClockCell extends CellType {
     
     public boolean isActiveFor(CellField c, CellField source) {
         return (c.getType() == 1 
-                && source.getMetavalues()[0] == cycleLength
+                && source.getMetavalues()[0] == source.getMetavalues()[2]
                 && source.getMetavalues()[1] == 0);            
     }
     
@@ -39,8 +36,8 @@ public class ClockCell extends CellType {
             return false;
         
         byte timer = (byte) (c.getMetavalues()[0] -1);
-        if(timer == -1)
-            timer = cycleLength;
+        if(timer <= 0)
+            timer = c.getMetavalues()[2];
         c.nextMetavalues[0] = timer;
         
         return false;

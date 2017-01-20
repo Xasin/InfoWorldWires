@@ -15,7 +15,9 @@ public class CellField {
     } 
     public CellField(CellField sauce) {
         this.type = sauce.type;
+        this.nextType = sauce.nextType;
         System.arraycopy(sauce.metavalues, 0, this.metavalues, 0, 4);
+        System.arraycopy(sauce.nextMetavalues, 0, this.nextMetavalues, 0, 4);
     }
     
     public void setType(byte type) {

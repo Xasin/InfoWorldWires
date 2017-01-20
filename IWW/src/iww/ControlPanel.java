@@ -6,6 +6,8 @@
 package iww;
 
 import iww.cellLogic.GameIterator;
+import iww.cellLogic.CellField;
+import javax.swing.event.ChangeEvent;
 
 /**
  *
@@ -17,15 +19,44 @@ public class ControlPanel extends javax.swing.JPanel {
      * Creates new form ControlPanel
      */
     private GameIterator gameLogic;
+    private CellField pen;
+    
+    private javax.swing.JSpinner[] metaSpinners;
     
     public ControlPanel(GameIterator logic) {
         initComponents();
         
+        this.pen = new CellField();
+        
         this.gameLogic = logic;
+        javax.swing.JSpinner[] metaSpinners = {
+            metaS1,
+            metaS2,
+            metaS3,
+            metaS4
+        };
+        this.metaSpinners = metaSpinners;
+        
+        javax.swing.event.ChangeListener metaChangeListener = (ChangeEvent e) -> {
+            updatePenMetas();
+        };
+        for(javax.swing.JSpinner s : metaSpinners)
+            s.addChangeListener(metaChangeListener);
         
         typeSelector.setModel(new javax.swing.DefaultComboBoxModel<>(gameLogic.getCellHandler().getTypeNames()));
     }
 
+    private void updatePenMetas() {
+        byte[] newMetas = {
+            (byte)(int)metaS1.getValue(),
+            (byte)(int)metaS2.getValue(),
+            (byte)(int)metaS3.getValue(),
+            (byte)(int)metaS4.getValue(),
+        };
+        
+        this.pen.setMetavalues(newMetas);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,13 +66,24 @@ public class ControlPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
         tickButton = new javax.swing.JButton();
-        typeSelector = new javax.swing.JComboBox<>();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         runButton = new javax.swing.JToggleButton();
         tpsSlider = new javax.swing.JSlider();
+        jPanel2 = new javax.swing.JPanel();
+        typeSelector = new javax.swing.JComboBox<>();
+        jPanel3 = new javax.swing.JPanel();
+        metaS1 = new javax.swing.JSpinner();
+        metaS2 = new javax.swing.JSpinner();
+        metaS3 = new javax.swing.JSpinner();
+        metaS4 = new javax.swing.JSpinner();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Controls"));
-        setLayout(new java.awt.GridLayout(2, 2, 3, 3));
+        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
+
+        jPanel1.setLayout(new java.awt.GridLayout(2, 0));
 
         tickButton.setText("Tick Once");
         tickButton.setToolTipText("Run one simulation tick");
@@ -50,15 +92,8 @@ public class ControlPanel extends javax.swing.JPanel {
                 tickButtonActionPerformed(evt);
             }
         });
-        add(tickButton);
-
-        typeSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        typeSelector.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                typeSelectorActionPerformed(evt);
-            }
-        });
-        add(typeSelector);
+        jPanel1.add(tickButton);
+        jPanel1.add(filler1);
 
         runButton.setText("Run Simulation");
         runButton.setToolTipText("Start/Stop running the simulation");
@@ -67,7 +102,7 @@ public class ControlPanel extends javax.swing.JPanel {
                 runButtonActionPerformed(evt);
             }
         });
-        add(runButton);
+        jPanel1.add(runButton);
 
         tpsSlider.setPaintTicks(true);
         tpsSlider.setToolTipText("Simulation FPS");
@@ -78,7 +113,31 @@ public class ControlPanel extends javax.swing.JPanel {
                 tpsSliderStateChanged(evt);
             }
         });
-        add(tpsSlider);
+        jPanel1.add(tpsSlider);
+
+        jTabbedPane1.addTab("Time Controls", jPanel1);
+
+        jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.PAGE_AXIS));
+
+        typeSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        typeSelector.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                typeSelectorActionPerformed(evt);
+            }
+        });
+        jPanel2.add(typeSelector);
+
+        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
+        jPanel3.add(metaS1);
+        jPanel3.add(metaS2);
+        jPanel3.add(metaS3);
+        jPanel3.add(metaS4);
+
+        jPanel2.add(jPanel3);
+
+        jTabbedPane1.addTab("Pen Options", jPanel2);
+
+        add(jTabbedPane1);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tickButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tickButtonActionPerformed
@@ -94,11 +153,23 @@ public class ControlPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tpsSliderStateChanged
 
     private void typeSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeSelectorActionPerformed
-        gameLogic.setPenType((byte)typeSelector.getSelectedIndex());
+        pen.setType((byte)typeSelector.getSelectedIndex());
+        for(javax.swing.JSpinner s : metaSpinners)
+            s.setValue(0);
+        gameLogic.setPenType(pen);
     }//GEN-LAST:event_typeSelectorActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JSpinner metaS1;
+    private javax.swing.JSpinner metaS2;
+    private javax.swing.JSpinner metaS3;
+    private javax.swing.JSpinner metaS4;
     private javax.swing.JToggleButton runButton;
     private javax.swing.JButton tickButton;
     private javax.swing.JSlider tpsSlider;

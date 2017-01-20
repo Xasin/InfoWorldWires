@@ -22,6 +22,27 @@ public class BridgeCell extends CellType {
         return source.getMetavalues()[0] == 1;
     }
     
+    public int[] dirOffsets(int dir) {
+        int[] offsets = new int[2];
+        
+        switch(dir%4) {
+            case 0:
+                offsets[0] = 1;
+                break;
+            case 1:
+                offsets[1] = 1;
+                break;
+            case 2:
+                offsets[0] = -1;
+                break;
+            case 3:
+                offsets[1] = -1;
+                break;
+        }
+        
+        return offsets;
+    }
+    
     public boolean computeCell(int x, int y) {
         GameIterator gLogic = cellHandler.getGameLogic();
         CellField c = gLogic.getCellAt(x, y);
@@ -31,18 +52,25 @@ public class BridgeCell extends CellType {
         
         CellField[] nearbyCells = new CellField[4];
         
-        nearbyCells[0] = gLogic.getCellAt(x + 2, y);
-        nearbyCells[1] = gLogic.getCellAt(x, y + 2);
-        nearbyCells[2] = gLogic.getCellAt(x - 2, y);
-        nearbyCells[3] = gLogic.getCellAt(x, y - 2);
-        
         c.nextMetavalues[0] = 0;
-        
-        for(CellField i : nearbyCells)
-            if(i.getType() == 4 && i.getMetavalues()[0] != 0) {
-                c.nextMetavalues[0] = 1;
-                return true;
+        CellField j;
+        for(int i=0; i<4; i++) {
+            
+            int[] dOffs = dirOffsets(i);
+            j = gLogic.getCellAt(x-dOffs[0], y-dOffs[1]);
+            if(j.getType() == 1 || j.getType() == 2) {
+                
+                for(int r = 1; r<50; r++) {
+                    
+                    j = gLogic.getCellAt(x + r*dOffs[0], y + r*dOffs[1]);
+                    
+                    if(j.getType() == 4 && j.getMetavalues()[0] != j.getMetavalues()[1]) {
+                        c.nextMetavalues[0] = 1;
+                        return true;
+                    }
+                }
             }
+        }
         
         return true;
     }

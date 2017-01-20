@@ -13,14 +13,14 @@ public class RandomCell extends CellType {
     }
     
     public Color getColor(CellField c) {
-        int fR = 100;
+        int fR = 180;
         return new Color(127-fR/2 + (int)(fR*Math.random()),
                          127-fR/2 + (int)(fR*Math.random()),
                          127-fR/2 + (int)(fR*Math.random()));
     }
     
     public boolean isActiveFor(CellField c, CellField source) {
-        return (Math.random() <= 0.2);
+        return (Math.random()*100) <= (byte)(source.getMetavalues()[0]);
     }
     
     public boolean computeCell(int x, int y) {
