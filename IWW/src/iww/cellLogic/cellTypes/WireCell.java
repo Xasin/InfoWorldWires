@@ -17,8 +17,14 @@ public class WireCell extends CellType {
     }
     
     public boolean computeCell(int x, int y) {
-        if(this.cellHandler.gameLogic.getCellAt(x, y).getType() == 1) {
-            
+        CellField c = this.cellHandler.gameLogic.getCellAt(x, y);
+        if(c.getType() != 1)
+            return false;
+        
+        int n = this.cellHandler.countActiveCellsFor(x, y);
+        if(n == 1 || n == 2) {
+            c.nextType = 2;
+            c.nextMetavalues[3] = 1;
         }
         
         return true;
