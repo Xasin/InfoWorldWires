@@ -17,7 +17,8 @@ public class WireCell extends CellType {
     }
     
     public boolean computeCell(int x, int y) {
-        CellField c = this.cellHandler.gameLogic.getCellAt(x, y);
+        CellField c = this.cellHandler.getGameLogic().getCellAt(x, y);
+
         if(c.getType() != 1)
             return false;
         
