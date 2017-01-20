@@ -49,8 +49,7 @@ public class CellHandler {
     
     public void computeNextState(int x, int y) {
         for(CellType t : cellTypes) {
-            if(t.computeCell(x, y))
-                break;
+            t.computeCell(x, y);
         }
     }
     
