@@ -26,4 +26,13 @@ public class RandomCell extends CellType {
     public boolean computeCell(int x, int y) {
         return false;
     }
+    
+    public CellField getNewCell() {
+        CellField c = new CellField();
+        c.setType((byte)5);
+        byte[] newMetas = {30, 0, 0, 0};
+        c.setMetavalues(newMetas);
+        
+        return c;
+    }
 }

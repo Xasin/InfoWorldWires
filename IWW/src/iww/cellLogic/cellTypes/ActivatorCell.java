@@ -33,10 +33,18 @@ public class ActivatorCell extends CellType {
         CellField c = cellHandler.getGameLogic().getCellAt(x, y);
         
         if(c.getType() == 4) {
-            if(cellHandler.countActiveCellsFor(x, y) == 0)
-                c.nextMetavalues[0] = 0;
-            else 
+            int n = cellHandler.countActiveCellsFor(x, y);
+        
+            if(n != 0) {
                 c.nextMetavalues[0] = 1;
+                c.nextMetavalues[2] = 2;
+            }
+            else {
+                if(c.getMetavalues()[2] != 0)
+                    c.nextMetavalues[2]--;
+                else 
+                    c.nextMetavalues[0] = 0;
+            }
             
             return true;
         }
@@ -52,5 +60,19 @@ public class ActivatorCell extends CellType {
         }
         
         return false;
+    }
+    
+    public void applyTo(int x, int y) {
+        CellField c = cellHandler.getGameLogic().getCellAt(x, y);
+        
+        if(c.getType() != 4) {
+            c.setMetavalues(new byte[4]);
+            c.setType((byte)4);
+        }
+        else {
+            byte[] meta = c.getMetavalues();
+            meta[1] ^= 1;
+            c.setMetavalues(meta);
+        }
     }
 }

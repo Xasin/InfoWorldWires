@@ -42,4 +42,17 @@ public class ClockCell extends CellType {
         
         return false;
     }
+    
+    public void applyTo(int x, int y) {
+        CellField c = cellHandler.getGameLogic().getCellAt(x, y);
+        
+        if(c.getType() != 3) {
+            byte[] metas = new byte[4];
+            metas[2] = 3;
+            c.setMetavalues(metas);
+            c.setType((byte)3);
+        }
+        else
+            c.nextMetavalues[2]++;
+    }
 }

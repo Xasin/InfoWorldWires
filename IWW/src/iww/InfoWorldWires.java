@@ -13,7 +13,6 @@ public class InfoWorldWires extends JFrame {
   
   private GameIterator gameLogic;
   private GameWindow gameWindow;
- 
   private ControlPanel controlPanel;
   
   public InfoWorldWires(String title) { 
@@ -43,6 +42,7 @@ public class InfoWorldWires extends JFrame {
     
     controlPanel = new ControlPanel(gameLogic);
     controlPanel.setBounds(5, 360, 690, 120);
+    gameWindow.setPositionCall(controlPanel);
     
     cp.add(controlPanel);
     

@@ -10,9 +10,7 @@ import iww.cellLogic.cellTypes.*;
  */
 public class CellHandler {
     
-    private final int clockLength = 4;
     private final CellType[] cellTypes;
-    
     private GameIterator gameLogic;
     
     public CellHandler() {
@@ -34,6 +32,13 @@ public class CellHandler {
     
     public byte getCellTypes() {
         return (byte)cellTypes.length;
+    }
+    
+    public void applyCellType(int x, int y, int t) {
+        if(t >= this.getCellTypes())
+            return;
+        
+        cellTypes[t].applyTo(x, y);
     }
     
     public int countActiveCellsFor(int x, int y) {

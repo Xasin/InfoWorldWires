@@ -11,11 +11,12 @@ import javax.swing.JPanel;
  *
  * @author xasin
  */
-public class GameWindow extends JPanel {
+public class GameWindow extends JPanel implements PositionCall {
     
     private final GameIterator gameLogic;
     private Button[][] gamePixels;
     private Dimension gameSize;
+    private PositionCall positionCall;
     
     private Timer timer;
     
@@ -27,17 +28,10 @@ public class GameWindow extends JPanel {
         
         this.gamePixels = new Button[gameSize.width][gameSize.height];
         
-        
-        ButtonFunction bFunc = new ButtonFunction() {
-            public void run(int posX, int posY) {
-                gameLogic.applyCellType(posX, posY);
-            }
-        };
-        
         System.out.println("Generating:" + gameSize.width + " " + gameSize.height);
         for(int y=0; y<gameSize.height; y++) {
             for(int x=0; x<gameSize.width; x++) {
-                gamePixels[x][y] = new Button(x, y, gameLogic, bFunc);
+                gamePixels[x][y] = new Button(x, y, gameLogic, this);
                 this.add(gamePixels[x][y]);
             }
         }
@@ -51,6 +45,15 @@ public class GameWindow extends JPanel {
         }, 0, 1000/30);
     }
     
+    public void click(int x, int y) {
+        if(this.positionCall != null)
+            this.positionCall.click(x, y);
+    }
+    
+    public void setPositionCall(PositionCall pCall) {
+        this.positionCall = pCall;
+    }
+     
     private void refreshButtons() {   
       for (int x=0; x<gameSize.width; x++)
           for (int y=0; y<gameSize.height; y++)

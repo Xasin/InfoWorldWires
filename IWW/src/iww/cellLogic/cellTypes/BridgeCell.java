@@ -74,4 +74,10 @@ public class BridgeCell extends CellType {
         
         return true;
     }
+    
+    public CellField getNewCell() {
+        CellField c = new CellField();
+        c.setType((byte)6);
+        return c;
+    }
 }
