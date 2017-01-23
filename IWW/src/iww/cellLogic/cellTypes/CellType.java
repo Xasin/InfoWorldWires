@@ -32,4 +32,8 @@ public class CellType {
         CellField c = new CellField();
         return c;
     }
+    
+    public void applyTo(int x, int y) {
+        cellHandler.getGameLogic().setCell(x, y, this.getNewCell());
+    }
 }

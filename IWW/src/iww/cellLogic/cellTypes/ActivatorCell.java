@@ -13,30 +13,48 @@ public class ActivatorCell extends CellType {
     }
     
     public Color getColor(CellField c) {
-        if(c.getMetavalues()[0] == c.getMetavalues()[1])
-            return new Color(0, 127, 0);
-        else 
+        if(isActive(c))
             return new Color(100, 255, 100);
+        else 
+            return new Color(0, 127, 0);   
+    }
+    
+    private boolean isActive(CellField c) {
+        if(c.getType() != 4)
+            return false;
+        return c.getMetavalues()[0] != c.getMetavalues()[1];
     }
     
     private int countActiveControls(int x, int y) {
         int n = 0;
         for(CellField c : cellHandler.getGameLogic().getSurroundingCells(x, y))
-            if(c.getType() == 4
-                    && c.getMetavalues()[0] != c.getMetavalues()[1])
+            if(this.isActive(c))
                 n++;
         
         return n;
+    }
+    
+    private void setState(CellField c, int state) {
+        if(c.getMetavalues()[2] != 0) {
+            c.nextMetavalues[2]--;
+            return;
+        }
+        
+        byte currentState = c.getMetavalues()[0];
+            
+        if(currentState != state) {
+            c.nextMetavalues[2] = (byte)(state == 1 ? 2 : 0);
+            c.nextMetavalues[0] = (byte)state;
+        }
     }
     
     public boolean computeCell(int x, int y) {
         CellField c = cellHandler.getGameLogic().getCellAt(x, y);
         
         if(c.getType() == 4) {
-            if(cellHandler.countActiveCellsFor(x, y) == 0)
-                c.nextMetavalues[0] = 0;
-            else 
-                c.nextMetavalues[0] = 1;
+            int n = cellHandler.countActiveCellsFor(x, y);
+        
+            setState(c, (n != 0) ? 1 : 0);
             
             return true;
         }
@@ -52,5 +70,19 @@ public class ActivatorCell extends CellType {
         }
         
         return false;
+    }
+    
+    public void applyTo(int x, int y) {
+        CellField c = cellHandler.getGameLogic().getCellAt(x, y);
+        
+        if(c.getType() != 4) {
+            c.setMetavalues(new byte[4]);
+            c.setType((byte)4);
+        }
+        else {
+            byte[] meta = c.getMetavalues();
+            meta[1] ^= 1;
+            c.setMetavalues(meta);
+        }
     }
 }

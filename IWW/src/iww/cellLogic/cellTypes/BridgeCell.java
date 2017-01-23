@@ -12,14 +12,22 @@ public class BridgeCell extends CellType {
     }
     
     public Color getColor(CellField c) {
-        int i = c.getMetavalues()[0] + 1;
-        return new Color(0, 100*i, 100*i);
+        return new Color(   0, 
+                            (c.getMetavalues()[1] >= 2 ? 0 : 100) + (isActive(c) ? 100 : 0), 
+                            (isActive(c) || c.getMetavalues()[1] >= 2 ? 200 : 100));
     }
     
+    private boolean isActive(CellField c) {
+        if(c.getMetavalues()[1] == 2)
+            return false;
+        return c.getMetavalues()[0] != c.getMetavalues()[1];
+    }
+    
+    @Override
     public boolean isActiveFor(CellField c, CellField source) {
         if(c.getType() == 4)
             return false;
-        return source.getMetavalues()[0] == 1;
+        return isActive(source);
     }
     
     public int[] dirOffsets(int dir) {
@@ -49,9 +57,7 @@ public class BridgeCell extends CellType {
     
         if(c.getType() != 6)
             return false;
-        
-        CellField[] nearbyCells = new CellField[4];
-        
+
         c.nextMetavalues[0] = 0;
         CellField j;
         for(int i=0; i<4; i++) {
@@ -68,10 +74,31 @@ public class BridgeCell extends CellType {
                         c.nextMetavalues[0] = 1;
                         return true;
                     }
+                    else if(j.getType() == 6 && j.getMetavalues()[1] == 2)
+                        return true;
                 }
             }
         }
         
         return true;
+    }
+    
+    public CellField getNewCell() {
+        CellField c = new CellField();
+        c.setType((byte)6);
+        return c;
+    }
+    
+    public void applyTo(int x, int y) {
+        GameIterator gameLogic = cellHandler.getGameLogic();
+        CellField c = gameLogic.getCellAt(x, y);
+        
+        if(c.getType() == 6) {
+           byte[] metas = c.getMetavalues();
+           metas[1] = (byte)((metas[1] + 1) % 3);
+           c.setMetavalues(metas);
+        }
+        else
+            gameLogic.setCell(x, y, this.getNewCell());
     }
 }

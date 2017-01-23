@@ -19,4 +19,11 @@ public class WireCell extends CellType {
     public boolean computeCell(int x, int y) {
         return false;
     }
+    
+    public CellField getNewCell() {
+        CellField c = new CellField();
+        c.setType((byte)1);
+        
+        return c;
+    }
 }

@@ -5,15 +5,12 @@
  */
 package iww;
 
-import iww.cellLogic.GameIterator;
-import iww.cellLogic.CellField;
-import javax.swing.event.ChangeEvent;
-
+import iww.cellLogic.*;
 /**
  *
  * @author xasin
  */
-public class ControlPanel extends javax.swing.JPanel {
+public class ControlPanel extends javax.swing.JPanel implements PositionCall {
 
     /**
      * Creates new form ControlPanel
@@ -21,40 +18,17 @@ public class ControlPanel extends javax.swing.JPanel {
     private GameIterator gameLogic;
     private CellField pen;
     
-    private javax.swing.JSpinner[] metaSpinners;
-    
     public ControlPanel(GameIterator logic) {
         initComponents();
         
         this.pen = new CellField();
-        
         this.gameLogic = logic;
-        javax.swing.JSpinner[] metaSpinners = {
-            metaS1,
-            metaS2,
-            metaS3,
-            metaS4
-        };
-        this.metaSpinners = metaSpinners;
-        
-        javax.swing.event.ChangeListener metaChangeListener = (ChangeEvent e) -> {
-            updatePenMetas();
-        };
-        for(javax.swing.JSpinner s : metaSpinners)
-            s.addChangeListener(metaChangeListener);
-        
+
         typeSelector.setModel(new javax.swing.DefaultComboBoxModel<>(gameLogic.getCellHandler().getTypeNames()));
     }
-
-    private void updatePenMetas() {
-        byte[] newMetas = {
-            (byte)(int)metaS1.getValue(),
-            (byte)(int)metaS2.getValue(),
-            (byte)(int)metaS3.getValue(),
-            (byte)(int)metaS4.getValue(),
-        };
-        
-        this.pen.setMetavalues(newMetas);
+    
+    public void click(int x, int y) {
+        gameLogic.applyCellType(x, y, typeSelector.getSelectedIndex());
     }
     
     /**
@@ -74,11 +48,6 @@ public class ControlPanel extends javax.swing.JPanel {
         tpsSlider = new javax.swing.JSlider();
         jPanel2 = new javax.swing.JPanel();
         typeSelector = new javax.swing.JComboBox<>();
-        jPanel3 = new javax.swing.JPanel();
-        metaS1 = new javax.swing.JSpinner();
-        metaS2 = new javax.swing.JSpinner();
-        metaS3 = new javax.swing.JSpinner();
-        metaS4 = new javax.swing.JSpinner();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Controls"));
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
@@ -127,14 +96,6 @@ public class ControlPanel extends javax.swing.JPanel {
         });
         jPanel2.add(typeSelector);
 
-        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
-        jPanel3.add(metaS1);
-        jPanel3.add(metaS2);
-        jPanel3.add(metaS3);
-        jPanel3.add(metaS4);
-
-        jPanel2.add(jPanel3);
-
         jTabbedPane1.addTab("Pen Options", jPanel2);
 
         add(jTabbedPane1);
@@ -153,10 +114,7 @@ public class ControlPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tpsSliderStateChanged
 
     private void typeSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeSelectorActionPerformed
-        pen.setType((byte)typeSelector.getSelectedIndex());
-        for(javax.swing.JSpinner s : metaSpinners)
-            s.setValue(0);
-        gameLogic.setPenType(pen);
+
     }//GEN-LAST:event_typeSelectorActionPerformed
 
 
@@ -164,12 +122,7 @@ public class ControlPanel extends javax.swing.JPanel {
     private javax.swing.Box.Filler filler1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JSpinner metaS1;
-    private javax.swing.JSpinner metaS2;
-    private javax.swing.JSpinner metaS3;
-    private javax.swing.JSpinner metaS4;
     private javax.swing.JToggleButton runButton;
     private javax.swing.JButton tickButton;
     private javax.swing.JSlider tpsSlider;

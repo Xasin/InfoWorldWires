@@ -55,4 +55,17 @@ public class SignalCell extends CellType {
         return false;
     }
     
+    public void applyTo(int x, int y) {
+        GameIterator gLogic = cellHandler.getGameLogic();
+        CellField c = gLogic.getCellAt(x, y);
+        
+        byte cType = c.getType();
+        
+        c.setType((byte)2);
+        byte[] meta = c.getMetavalues();
+        meta[0] = 0;
+        meta[3] = cType;
+        c.setMetavalues(meta);
+    }
+    
 }
