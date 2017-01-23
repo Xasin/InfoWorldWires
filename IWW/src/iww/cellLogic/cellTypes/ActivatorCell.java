@@ -54,7 +54,16 @@ public class ActivatorCell extends CellType {
         if(c.getType() == 4) {
             int n = cellHandler.countActiveCellsFor(x, y);
         
-            setState(c, (n != 0) ? 1 : 0);
+            c.nextMetavalues[3] = (byte)n;
+            
+            if(n > c.getMetavalues()[3]) {
+                c.nextMetavalues[2] = 2;
+                c.nextMetavalues[0] = 1;
+            }
+            else if(c.getMetavalues()[2] != 0)
+                c.nextMetavalues[2]--;
+            else if(n == 0)
+                c.nextMetavalues[0] = 0;
             
             return true;
         }
