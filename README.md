@@ -1,0 +1,2 @@
+# InfoWorldWires
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f67fbf0010024108bbd0797141c69e2b)](https://www.codacy.com/app/Xasin/InfoWorldWires?utm_source=github.com&utm_medium=referral&utm_content=Xasin/InfoWorldWires&utm_campaign=badger)
